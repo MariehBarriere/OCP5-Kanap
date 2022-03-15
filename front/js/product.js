@@ -20,9 +20,9 @@ function getItem (idProduit){
 
 //on intègre les détails dans la page du produit
 function insertProduct(product){
-    let img = document.getElementsByClassName("item__img")
+    let img= document.getElementsByClassName("item__img")
     //img[0] pour sélectionner le premier élément. + remplace $[] car ne sont pas interprétés par éditeur
-    img[0].innerHTML += "<img src=" + product.imageUrl + "alt=" + product.altTxt + "></img>"
+    img[0].innerHTML += "<img src=" +product.imageUrl + " alt=" +product.altTxt +"></img>"
     let title = document.getElementById("title")
     title.innerHTML += product.name
     let price = document.getElementById("price")
