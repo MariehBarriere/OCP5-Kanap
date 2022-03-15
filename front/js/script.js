@@ -1,3 +1,8 @@
+//On s'assure que le DOM est chargé
+window.onload = () => {  
+// Exécuté après le chargement de la page
+
+
 main()
 async function main(){
     let products = await getProducts("http://localhost:3000/api/products");
@@ -28,3 +33,5 @@ function insertProduct(product){
     </article>
   </a>`
 } 
+
+}
