@@ -36,5 +36,39 @@ function insertProduct(product){
     }
 } 
 
+//Sélection de l'utilisateur: par couleur, quantité de 1 à 100
+const btn_basket= document.getElementById("addToCart");
 
+// on écoute le bouton et on empêche la réactualisation de la page au click
+    btn_basket.addEventListener('click', (e) => {
+       e.preventDefault();
+        console.log("yes");
+// on choisit la couleur et la quantité
+    let chosenColor= document.querySelector("#colors").value;
+    let chosenQuantity = document.querySelector("#quantity").value;
+        if(chosenColor && chosenQuantity > 0 && chosenQuantity <= 100){
+        let article = {
+        idProduit,
+        chosenColor,
+        chosenQuantity
+        }
+        let basket = JSON.parse(localStorage.getItem("basket"));
+        if (basket==null){basket=[]}
+        else {let findProduct = basket.find(b =>b.idProduit==article.idProduit && b.chosenColor==article.chosenColor)
+            if(findProduct !=undefined){
+                let addQuantity=parseInt(article.chosenQuantity)+parseInt(findProduct.chosenQuantity) 
+                findProduct.chosenQuantity=addQuantity      
+            } else{article.chosenQuantity=chosenQuantity
+                basket.push (article)
+            }
+        }
+        localStorage.setItem ("basket", JSON.stringify(basket))
+        window.alert("Produit ajouté au panier") 
+        }
+//message d'erreur si conditions non remplies
+       else {
+         window.alert("Veuillez choisir une couleur ainsi qu'une quantité") 
+    } 
+})
+     
 
