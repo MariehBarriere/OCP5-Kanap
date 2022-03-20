@@ -37,10 +37,10 @@ function insertProduct(product){
 } 
 
 //Sélection de l'utilisateur: par couleur, quantité de 1 à 100
-const btn_basket= document.getElementById("addToCart");
+const btn_addBasket= document.getElementById("addToCart");
 
 // on écoute le bouton et on empêche la réactualisation de la page au click
-    btn_basket.addEventListener('click', (e) => {
+    btn_addBasket.addEventListener('click', (e) => {
        e.preventDefault();
         console.log("yes");
 // on choisit la couleur et la quantité
@@ -52,23 +52,31 @@ const btn_basket= document.getElementById("addToCart");
         chosenColor,
         chosenQuantity
         }
+        //analyse: on regarde si il y a déjà un produit dans le panier
         let basket = JSON.parse(localStorage.getItem("basket"));
+        //S'il n'y a pas d'élément dans le panier, on fera juste un tableau vide et donc ajout au panier
         if (basket==null){basket=[]}
-        else {let findProduct = basket.find(b =>b.idProduit==article.idProduit && b.chosenColor==article.chosenColor)
-            if(findProduct !=undefined){
-                let addQuantity=parseInt(article.chosenQuantity)+parseInt(findProduct.chosenQuantity) 
-                findProduct.chosenQuantity=addQuantity      
-            } else{article.chosenQuantity=chosenQuantity
+        //S'il y a un produit, on le compare, on vérifie la couleur 
+        else {let foundProduct = basket.found(b =>b.idProduit==article.idProduit && b.chosenColor==article.chosenColor)
+            //cherche s'il est présent***parsInt=transforme en chiffre
+            if(foundProduct !=undefined){
+                let addQuantity=parseInt(article.chosenQuantity)+parseInt(foundProduct.chosenQuantity) 
+                foundProduct.chosenQuantity=addQuantity   
+            //on ajoute le produit dans le panier   
+            } else {article.chosenQuantity=chosenQuantity
                 basket.push (article)
             }
         }
+        //On ajoute les produits dans le panier et on transforme le tableau au format JSON
         localStorage.setItem ("basket", JSON.stringify(basket))
         window.alert("Produit ajouté au panier") 
         }
-//message d'erreur si conditions non remplies
+
+    //message d'erreur si conditions non remplies
        else {
          window.alert("Veuillez choisir une couleur ainsi qu'une quantité") 
     } 
 })
-     
+     //On teste sur le navigateur: Application, Local Storage, file, basket 
+     //on ajoute un produit pour vérifier que le précédent n'est pas écrasé mais ajouté
 
