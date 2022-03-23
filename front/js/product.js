@@ -57,14 +57,14 @@ const btn_addBasket= document.getElementById("addToCart");
         //S'il n'y a pas d'élément dans le panier, on fera juste un tableau vide et donc ajout au panier
         if (basket==null){basket=[]}
         //S'il y a un produit, on le compare, on vérifie la couleur 
-        else {let foundProduct = basket.found(b =>b.idProduit==article.idProduit && b.chosenColor==article.chosenColor)
+        else {let findProduct = basket.find(b =>b.idProduit==article.idProduit && b.chosenColor==article.chosenColor)
             //cherche s'il est présent***parsInt=transforme en chiffre
-            if(foundProduct !=undefined){
-                let addQuantity=parseInt(article.chosenQuantity)+parseInt(foundProduct.chosenQuantity) 
-                foundProduct.chosenQuantity=addQuantity   
+            if(findProduct !=undefined){
+                let addQuantity=parseInt(article.chosenQuantity)+parseInt(findProduct.chosenQuantity) 
+                findProduct.chosenQuantity=addQuantity   
             //on ajoute le produit dans le panier   
-            } else {article.chosenQuantity=chosenQuantity
-                basket.push (article)
+            } else {article.chosenQuantity = chosenQuantity
+                basket.push(article)
             }
         }
         //On ajoute les produits dans le panier et on transforme le tableau au format JSON
