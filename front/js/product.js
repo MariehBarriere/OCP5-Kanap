@@ -6,7 +6,6 @@ window.onload = getItem(idProduit)
 //on crée la fonction avec fetch pour l'interpréter on récupère l'URL + l'idProduit
 function getItem (idProduit){
     fetch("http://localhost:3000/api/products/" + idProduit) //then et catch pour traiter la réponse
-
     //on veut récupérer la réponse en json
     .then(response => response.json())
     //on retourne la réponse qui a été transformée
