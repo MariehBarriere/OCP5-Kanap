@@ -54,7 +54,7 @@ const btn_addBasket= document.getElementById("addToCart");
         //analyse: on regarde si il y a déjà un produit dans le panier
         let basket = JSON.parse(localStorage.getItem("basket"));
         //S'il n'y a pas d'élément dans le panier, on fera juste un tableau vide et donc ajout au panier
-        if (basket==null){basket=[]}
+        if (basket==null){basket=[]; basket.push(article)}
         //S'il y a un produit, on le compare, on vérifie la couleur 
         else {let findProduct = basket.find(b =>b.idProduit==article.idProduit && b.chosenColor==article.chosenColor)
             //cherche s'il est présent***parsInt=transforme en chiffre
