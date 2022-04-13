@@ -1,7 +1,10 @@
 /************gestion du panier**********/
+
 //Récupération du panier (ligne 56)
 let basket = JSON.parse(localStorage.getItem("basket"));
 let form = document.querySelector(".cart__order__form");
+  //form.addEventListener("click", listenForm);
+
 main(basket);
 if (basket && basket.length == 0) {
   alert("Votre panier est vide");
@@ -35,7 +38,7 @@ function main(basket) {
               <div class="cart__item__content__description">
                 <h2>${article.name}</h2>
                 <p>${basket[index].chosenColor}</p>
-                <p>${article.price} £</p> 
+                <p>${article.price} €</p> 
               </div>
               <div class="cart__item__content__settings">
                <div class="cart__item__content__settings__quantity">
@@ -57,7 +60,6 @@ function main(basket) {
           totalQuantity.innerHTML = nbrart;
         })
         .then(() => {deleteProduct(index);changeQuantity(index); index++})
-       
     }
   }
 }
@@ -68,19 +70,24 @@ function deleteProduct(index) {
   let btnDelete2 = document.querySelectorAll(".cart__item__content__settings__delete > .deleteItem" );
   //for (let b = 0; b < basket.length; b++) {
     console.log(index);
-    btnDelete[index].addEventListener('click', (e) => {
-      e.preventDefault();
-      //Sélection de l'id du produit et de sa couleur qui seront supprimés en cliquant dessus
-      let idDelete = basket[index].idProduit;
-      let colorDelete = basket[index].chosenColor;
+    for (let i = 0; i <= index; i ++){
+      btnDelete[i].addEventListener('click', (e) => {
+        e.preventDefault();
+        // Ces deux variables permettent de supprimer un objet via son ID et sa couleur.
+        let idDelete = basket[i].idProduit;
+        let colorDelete = basket[i].chosenColor;
 
-      basket = basket.filter(
+        // Filtre les objets n'ayant pas la même ID ou même couleur que l'élément cliqué
+        basket = basket.filter(
         (el) => el.idProduit !== idDelete || el.chosenColor !== colorDelete);
       localStorage.setItem("basket", JSON.stringify(basket));
-
-      alert("Ce produit a bien été supprimé");
+        
+        // Pop-up alerte indiquant à l'usager que le produit séléctionné a bien été supprimer
+        alert("Ce produit a bien été supprimé");
       location.reload();
-    })
+      })
+    }
+
   //}
 }
 
@@ -90,28 +97,31 @@ function changeQuantity(index) {
 console.log(newItemQuantity[index]);
 console.log(basket[index]);
   //for (let c = 0; c < basket.length; c++) {
-    newItemQuantity[index].addEventListener("input", function() {
+    for (let i = 0; i <= index; i ++){
+    newItemQuantity[i].addEventListener("input", function() {
      
 
       //Selection de l'element à modifier en fonction de son id et de sa couleur
-      let changeQuantity = basket[index].chosenQuantity;
+      let changeQuantity = basket[i].chosenQuantity;
       console.log(changeQuantity);
-      let newQuantityValue = newItemQuantity[index].valueAsNumber;
+      let newQuantityValue = newItemQuantity[i].valueAsNumber;
 console.log(newQuantityValue);
-      basket[index].chosenQuantity = newQuantityValue;
+      basket[i].chosenQuantity = newQuantityValue;
       localStorage.setItem("basket", JSON.stringify(basket));
 
       alert("Ce produit a été modifié");
       location.reload();
     })
-  //}
+  }
 }
+
 
 /*******Création du formulaire******/
 
 //Écouter le formulaire et valider la commande
 const listenForm = () => {
   form = querySelector("#cart__order__form");
+  form.addEventListener("click", listenForm);
 
   //on créé les expressions régulières
   let nameRegExp = new RegExp("[^0-9\.\,\"\?\!\;\:\#\$\%\&\(\)\*\+\-\/\<\>\=\@\[\]\\\^\_\{\}\|\~]+");
@@ -201,8 +211,16 @@ function postForm(){
     }
   })
   
+  checkBasket(sendOrder);
+  function checkBasket(sendOrder) {
+    if (cart.length < 1) {
+      alert("Votre panier est vide. Revenez à la page Accueil pour commander votre canapé");
+    } else {
+      sendingOrder(sendOrder);
+    }
+  } 
 
-  // fonction POST commande
+// fonction POST commande
   const sendingOrder = (sendOrder) =>{
   //On envoie l'objet contenant le produit et le contact vers le serveur
   const promiseOrder = fetch('http://localhost:3000/api/products/order', {
@@ -225,6 +243,6 @@ function postForm(){
     .catch((error) => {
       console.log(`ERREUR requete POST : ${error}`);
     });
-
   } 
 }
+
