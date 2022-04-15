@@ -77,8 +77,6 @@ function deleteProduct(index) {
   let btnDelete2 = document.querySelectorAll(
     ".cart__item__content__settings__delete > .deleteItem"
   );
-  //for (let b = 0; b < basket.length; b++) {
-  console.log(index);
   for (let i = 0; i <= index; i++) {
     btnDelete[i].addEventListener("click", (e) => {
       e.preventDefault();
@@ -102,19 +100,14 @@ function deleteProduct(index) {
 //Modification du nombre d'articles
 function changeQuantity(index) {
   let newItemQuantity = document.querySelectorAll(".itemQuantity");
-  console.log(newItemQuantity[index]);
-  console.log(basket[index]);
 
   for (let i = 0; i <= index; i++) {
     newItemQuantity[i].addEventListener("input", function () {
       //Selection de l'element à modifier en fonction de son id et de sa couleur
       let changeQuantity = basket[i].chosenQuantity;
-      console.log(changeQuantity);
       let newQuantityValue = newItemQuantity[i].valueAsNumber;
-      console.log(newQuantityValue);
       basket[i].chosenQuantity = newQuantityValue;
       localStorage.setItem("basket", JSON.stringify(basket));
-
       alert("Ce produit a été modifié");
       location.reload();
     });
@@ -132,12 +125,10 @@ let email = false;
 
 //Écouter le formulaire et valider la commande
 const listenForm = () => {
-  console.log("ok");
   form = document.querySelectorAll(".cart__order__form");
   form = form[0];
 
   //on créé les expressions régulières
-  console.log(form);
   let nameRegExp =
     /[^0-9\.\,\"\?\!\;\:\#\$\%\&\(\)\*\+\-\/\<\>\=\@\[\]\\\^\_\{\}\|\~]+/;
   let addressRegExp =
@@ -147,18 +138,13 @@ const listenForm = () => {
 
   //On appelle la fonction, on vérifie la validité des données
   const validFirstName = function (inputFirstName) {
-    console.log(inputFirstName);
     let firstNameErrorMsg = inputFirstName.nextElementSibling;
     if (inputFirstName.value.match(nameRegExp)) {
       firstNameErrorMsg.innerHTML = "";
       firstName = true;
-      console.log("success");
-      console.log(inputFirstName.value);
     } else {
       firstNameErrorMsg.innerHTML = "Veuillez compléter ce champ";
       firstName = false;
-      console.log("echec");
-      console.log(inputFirstName.value);
     }
   };
   const validLastName = function (inputLastName) {
@@ -215,7 +201,6 @@ const listenForm = () => {
 form.addEventListener("submit", (e) => {
   e.preventDefault();
   listenForm();
-  console.log(lastName);
   if (firstName && lastName && address && city && email) {
     //On récupère les valeurs du formulaire
     let contact = {
