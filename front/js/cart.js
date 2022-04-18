@@ -180,7 +180,6 @@ const listenForm = () => {
   const validEmail = function (inputEmail) {
     let emailErrorMsg = inputEmail.nextElementSibling;
     if (inputEmail.value.match(emailRegExp)) {
-      //if(emailRegExp.test(inputEmail.value)){
       emailErrorMsg.innerHTML = "";
       email = true;
     } else {
